@@ -33,7 +33,7 @@ Options:
                      Defaults to 1; Must be more than 0
 -n num-calls         Run for exactly this number of calls by each DynamoDB session
                      Defaults to 1; Must be more than 0
--r retry-num         Number fo Retry in each message send
+-r retry-num         Max number of retry in each DynamoDB item update if an error occured
                      Default to 1; Must be more than 0
 -endpoint-url <url>  DynamoDB Endpoint URL to send the API request to.
                      Defaults to "", which mean the AWS SDK automatically determines the URL
@@ -111,8 +111,8 @@ func (c *DynamoDBBenchmark) Run() {
 	fmt.Println("-----------------------")
 	fmt.Printf("DynamoDB Benchmark Summary - %s\n", c.Action)
 	fmt.Println("-----------------------")
-	fmt.Printf("Sent messages: %v\n", successCount)
-	fmt.Printf("Errors: %v\n", errorCount)
+	fmt.Printf("Success count: %v\n", successCount)
+	fmt.Printf("Error count: %v\n", errorCount)
 	fmt.Printf("Duration (sec): %v\n", duration)
 	fmt.Printf("Average (ms): %v\n", average_ms)
 }
@@ -233,7 +233,7 @@ func main() {
 	flag.IntVar(&condition, "condition", 0, "Conditinal check value of max age on updating age field")
 	flag.IntVar(&connections, "c", 1, "Number of parallel simultaneous DynamoDB session")
 	flag.IntVar(&numCalls, "n", 1, "Run for exactly this number of calls by each DynamoDB session")
-	flag.IntVar(&retryNum, "r", 1, "Number fo Retry in each message send")
+	flag.IntVar(&retryNum, "r", 1, "Max number fo Retry in each DynamoDB item update if an error occured")
 	flag.BoolVar(&verbose, "verbose", false, "Verbose option")
 	flag.Usage = usage
 	flag.Parse()
